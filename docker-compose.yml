@@ -1,0 +1,38 @@
+version: '3'
+services:
+    sf:
+        build: .docker/sf
+        volumes:
+            - ./:/var/www/app
+        ports:
+            - "8000:80"
+        depends_on:
+            - db
+        user: www-data
+        dns:
+            - 8.8.8.8
+            - 208.67.222.222
+            - 1.1.1.1
+    db:
+        image: mysql
+        ports:
+            - "3307:3306"
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+            MYSQL_DATABASE: 'sf'
+    mailhog:
+        image: mailhog/mailhog:v1.0.0
+        ports:
+            - "1025:1025"
+            - "8025:8025"
+    encore:
+        build: .docker/node
+        volumes:
+            - ./:/usr/src/app
+        ports:
+            - "8080:8080"
+        depends_on:
+            - sf
+        environment: 
+            - LOCAL_DOMAIN=sf/
+        command: sh -c "npm install && npm run dev-server"

@@ -1,0 +1,11 @@
+# Mysql
+.docker/data
+
+# ssh (Important !!)
+.docker/.ssh
+
+# composer
+/vendor
+
+# OS
+.DS_Store
