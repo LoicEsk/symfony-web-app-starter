@@ -19,7 +19,7 @@ services:
             - "3307:3306"
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-            MYSQL_DATABASE: 'sf'
+            MYSQL_DATABASE: 'sf_dev'
     mailhog:
         image: mailhog/mailhog:v1.0.0
         ports:
