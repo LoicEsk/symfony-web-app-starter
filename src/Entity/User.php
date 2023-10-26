@@ -13,7 +13,6 @@ use App\Entity\Traits\EntityTimeTrait;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
 
-    use EntityIdTrait;
     use EntityTimeTrait;
     
     #[ORM\Id]
@@ -32,6 +31,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable('now');
+    }
 
     public function getId(): ?int
     {
