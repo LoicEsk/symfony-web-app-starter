@@ -8,3 +8,18 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/bootstrap.sass';
 import './styles/app.css';
+
+import { 
+    Alert,
+    Button,
+    Carousel,
+    Collapse,
+    Dropdown,
+    Modal,
+    Offcanvas,
+    Popover,
+    ScrollSpy,
+    Tab,
+    Toast,
+    Tooltip
+} from 'bootstrap';
