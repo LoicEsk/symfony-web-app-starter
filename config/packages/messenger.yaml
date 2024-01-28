@@ -4,16 +4,16 @@ framework:
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
-            async:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    use_notify: true
-                    check_delayed_interval: 60000
-                retry_strategy:
-                    max_retries: 3
-                    multiplier: 2
+            # async:
+            #     dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+            #     options:
+            #         use_notify: true
+            #         check_delayed_interval: 60000
+            #     retry_strategy:
+            #         max_retries: 3
+            #         multiplier: 2
             failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
+            async: 'sync://'
 
         routing:
             Symfony\Component\Mailer\Messenger\SendEmailMessage: async
