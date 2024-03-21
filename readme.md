@@ -1,12 +1,7 @@
 # Docker dev env
 
-Template de dépôt pour stack php / ReactJs
+Préconfigration d'une application type Website Symfony avec les fonctionnalités courantes et un environnement de développement Docker
 
-C'est version est pensée pour Symfony
-
-## Les configrations disponibles
-
-D'autres configurations sont disponible sur les différentes branches
 
 
 ## Utilisation du serveur Docker
@@ -14,4 +9,8 @@ D'autres configurations sont disponible sur les différentes branches
 Installation et déployement pour developement en local
 
 1. `bash deploy_docker.sh
+
+## Les tests
+
+La base de données de tests crée et maintenue à jour par le script *docker_deploy.sh*
 
