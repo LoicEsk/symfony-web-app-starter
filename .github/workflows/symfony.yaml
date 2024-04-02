@@ -1,0 +1,30 @@
+name: PHPUnit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        coverage: none
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+    - name: Create test database and load fixtures
+      run: |
+        ./vendor/bin/doctrine database:create --env=test
+        ./vendor/bin/doctrine schema:update --force --env=test
+        ./vendor/bin/doctrine fixtures:load --no-interaction --env=test
+    - name: Run PHPUnit
+      run: ./vendor/bin/phpunit
