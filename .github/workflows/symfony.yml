@@ -42,12 +42,12 @@ jobs:
         mkdir -p data
         touch data/database.sqlite
     - name: init Database
-        env:
-          DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
-        run: |
-          php bin/console doctrine:database:create
-          php bin/console doctrine:migrations:migrate --no-interaction
-          php bin/console doctrine:fixtures:load --no-interaction --force
+      env:
+        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
+      run: |
+        php bin/console doctrine:database:create
+        php bin/console doctrine:migrations:migrate --no-interaction
+        php bin/console doctrine:fixtures:load --no-interaction --force
   - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
