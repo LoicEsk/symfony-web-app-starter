@@ -18,7 +18,6 @@ jobs:
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
           MYSQL_ROOT_PASSWORD: symfony
-          MYSQL_DATABASE: db_test
         ports:
           - 3306/tcp
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -48,12 +47,13 @@ jobs:
     
     - name: Setup the Database
       run: |
-        bin/console doctrine:migrations:migrate --no-interaction
-        bin/console doctrine:fixtures:load --no-interaction
+        bin/console doctrine:database:create --env=test
+        bin/console doctrine:migrations:migrate --no-interaction --env=test
+        bin/console doctrine:fixtures:load --no-interaction --env=test
       env:
-        DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/db_test
+        DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/db
     
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
       env:
-        DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/db_test
+        DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/db
