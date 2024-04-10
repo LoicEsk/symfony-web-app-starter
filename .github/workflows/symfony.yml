@@ -23,7 +23,7 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     env:
-      DATABASE_URL: mysql://root:root@mysql:3306/db_test
+      DATABASE_URL: mysql://root:root@127.0.0.1:3306/db_test
     
     steps:
     - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
