@@ -16,17 +16,26 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_DATABASE: 'db_test'
+        ports:
+          - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    env:
+      DATABASE_URL: mysql://root:root@mysql:3306/db_test
+    
     steps:
     - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
       with:
         php-version: '8.1'
-        extensions: mbstring, pdo_mysql
+        extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, dom, filter, gd, iconv, json, mbstring, mysqli
         coverage: none
+    
     - uses: actions/checkout@v3
     - name: Copy .env.test.local
       run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
+
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
@@ -35,13 +44,15 @@ jobs:
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php-
+    
     - name: Install Dependencies
       run: composer install --no-interaction --ignore-platform-reqs
+    
     - name: Setup the Database
       run: |
-        echo "DATABASE_URL=mysql://root:root@mysql:3306/db_test" >> .env.test.local
-        bin/console doctrine:database:create --env=test
-        bin/console doctrine:migrations:migrate --no-interaction --env=test
-        bin/console doctrine:fixtures:load --no-interaction --force --env=test
+        bin/console doctrine:database:create
+        bin/console doctrine:migrations:migrate --no-interaction
+        bin/console doctrine:fixtures:load --no-interaction --force
+    
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
