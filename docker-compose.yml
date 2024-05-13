@@ -1,4 +1,3 @@
-version: '3'
 services:
     sf:
         build: .docker/sf
