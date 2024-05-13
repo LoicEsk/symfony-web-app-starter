@@ -13,14 +13,20 @@ jobs:
   symfony-tests:
     runs-on: ubuntu-latest
     services:
-      mysql:
+      mariadb:
         image: mariadb:11.3.2
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
-          MYSQL_ROOT_PASSWORD: symfony
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
+          MYSQL_DATABASE: db_test
         ports:
           - 3306/tcp
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        healthcheck:
+          test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+          interval: 10s
+          timeout: 5s
+          retries: 3
     
     steps:
     - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
@@ -57,9 +63,9 @@ jobs:
         bin/console doctrine:migrations:migrate --no-interaction --env=test
         bin/console doctrine:fixtures:load --no-interaction --env=test
       env:
-        DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/db
+        DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mariadb.ports['3306'] }}/db_test
     
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
       env:
-        DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/db
+        DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mariadb.ports['3306'] }}/db_test
