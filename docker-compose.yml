@@ -44,4 +44,4 @@ services:
         ports:
             - "8088:80"
         user: www-data
-        command: sh -c "npm run dev-server && php bin/console sass:build --watch"
+        command: sh -c "php bin/console sass:build --watch"
