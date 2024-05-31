@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Password Reset Email Sent{% endblock %}
+{% block title %}Automatron - Réinitialiser son mot de passe{% endblock %}
 
 {% block content %}
-    <p>
-        If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
-        This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-    </p>
-    <p>If you don't receive an email please check your spam folder or <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+    <h1 class="text-center text-primary mt-5">Récupérer son mot de passe</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-4 mt-4 mb-4">
+            <div class="bg-light p-4 rounded shadow-sm mb-2">
+                <p>Si votre email est lié à un compte, vous allez recevoir un mail contenant un lien pour réinitialiser votre mot de passe. Ce lien expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+                <p>Dans l'éventualité où vous n'avez rien reçu, regardez vos spams ou <a href="{{ path('app_forgot_password_request') }}">réessayez</a>.</p>
+            </div>
+        </div>
+    </div>
 {% endblock %}
