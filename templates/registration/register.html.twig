@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Automatron - Inscription{% endblock %}
+
+{% block content %}
+    {% include 'parts/flashBang.html.twig' %}
+
+    <h1 class="text-center text-primary mt-5">Inscription</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-4 mt-4 mb-4">
+            <div class="bg-light p-4 rounded shadow-sm mb-2">
+                {{ form_errors(registrationForm) }}
+
+                {{ form_start(registrationForm) }}
+                    {{ form_row(registrationForm.email) }}
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Mot de passe'
+                    }) }}
+
+                    <button type="submit" class="mx-auto d-block btn btn-primary text-white">S'inscrire</button>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+        
+    </div>
+
+    
+{% endblock %}
