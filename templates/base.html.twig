@@ -8,12 +8,10 @@
         
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
-            {# {{ encore_entry_link_tags('app') }} #}
         {% endblock %}
 
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
-            {# {{ encore_entry_script_tags('app') }} #}
         {% endblock %}
     </head>
     <body>
