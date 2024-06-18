@@ -10,7 +10,7 @@
 
 # Your code goes here
 
-composer Install
+composer install
 
 # Mise à jour de la base de données
 php bin/console doctrine:migrations:list
