@@ -47,11 +47,11 @@ jobs:
     - name: Install Dependencies
       run: composer install --no-interaction --ignore-platform-reqs
 
-    - name: npm install
-      run: npm ci
+    # - name: npm install
+    #   run: npm ci
 
-    - name: Build assets
-      run: npm run build
+    # - name: Build assets
+    #   run: npm run build
     
     - name: Setup the Database
       run: |
