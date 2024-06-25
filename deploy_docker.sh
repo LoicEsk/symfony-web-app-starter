@@ -26,8 +26,8 @@ docker compose run --rm sf php bin/console doctrine:fixtures:load --env=test --n
 
 # compilation des assets
 docker compose run --rm sf php bin/console importmap:install
-docker compose run --rm sf php bin/console sass:build
-docker compose run --rm sf php bin/console asset-map:compile
+# docker compose run --rm sf php bin/console sass:build
+# docker compose run --rm sf php bin/console asset-map:compile
 
 # Liste des migrations Doctrine
 docker compose run --rm sf php bin/console doctrine:migrations:list
