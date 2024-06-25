@@ -46,6 +46,7 @@
         "symfonycasts/reset-password-bundle": "^1.18",
         "symfonycasts/sass-bundle": "*",
         "symfonycasts/verify-email-bundle": "^1.17",
+        "twbs/bootstrap": "^5.3",
         "twbs/bootstrap-icons": "^1.11",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
