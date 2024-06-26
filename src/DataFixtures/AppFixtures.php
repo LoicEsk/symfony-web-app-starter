@@ -21,6 +21,7 @@ class AppFixtures extends Fixture
 
         /** User Admin */
         $adminUser = (new User())
+            ->setLogin( 'admin' )
             ->setEmail( 'admin@local.app' )
             ->setRoles( ['ROLE_ADMIN'] )
         ;
@@ -29,6 +30,7 @@ class AppFixtures extends Fixture
 
         /** User std */
         $user = (new User())
+            ->setLogin( 'user' )
             ->setEmail( 'user@local.app' )
             ->setRoles( [] )
         ;
