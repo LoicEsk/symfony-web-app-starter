@@ -24,15 +24,24 @@ services:
         ports:
             - "1025:1025"
             - "8025:8025"
-    encore:
-        build: .docker/node
+    # encore:
+    #     build: .docker/node
+    #     volumes:
+    #         - ./:/usr/src/app
+    #     ports:
+    #         - "8080:8080"
+    #     depends_on:
+    #         - sf
+    #     environment: 
+    #         - LOCAL_DOMAIN=sf/
+    #     command: sh -c "npm run dev-server"
+    #     user: node
+
+    sass-watcher:
+        build: .docker/sf
         volumes:
-            - ./:/usr/src/app
+            - ./:/var/www/app
         ports:
-            - "8080:8080"
-        depends_on:
-            - sf
-        environment: 
-            - LOCAL_DOMAIN=sf/
-        command: sh -c "npm run dev-server"
-        user: node
+            - "8088:80"
+        user: www-data
+        command: sh -c "php bin/console sass:build --watch"

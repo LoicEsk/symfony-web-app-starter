@@ -2,7 +2,7 @@
 
 
 #  Install des packet php
-docker compose run --rm sf composer Install
+docker compose run --rm sf composer install
 
 
 
@@ -20,9 +20,14 @@ docker compose run --rm sf php bin/console doctrine:fixtures:load --env=test --n
 
 # docker compose run --rm sf php bin/console doctrine:migrations:migrate --env=test -y
 
-# Install des packet JS
-docker compose run --rm encore npm i
-docker compose run --rm encore npm run dev
+# # Install des packet JS
+# docker compose run --rm encore npm i
+# docker compose run --rm encore npm run dev
+
+# compilation des assets
+docker compose run --rm sf php bin/console importmap:install
+# docker compose run --rm sf php bin/console sass:build
+# docker compose run --rm sf php bin/console asset-map:compile
 
 # Liste des migrations Doctrine
 docker compose run --rm sf php bin/console doctrine:migrations:list

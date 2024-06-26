@@ -61,6 +61,21 @@
             "ref": "471aed0fbf5620b8d7f92b7a5ebbbf6c0945c27a"
         }
     },
+    "symfony/asset-mapper": {
+        "version": "7.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.4",
+            "ref": "6c28c471640cc2c6e60812ebcb961c526ef8997f"
+        },
+        "files": [
+            "assets/app.js",
+            "assets/styles/app.css",
+            "config/packages/asset_mapper.yaml",
+            "importmap.php"
+        ]
+    },
     "symfony/console": {
         "version": "6.3",
         "recipe": {
@@ -213,6 +228,20 @@
             "config/packages/security.yaml"
         ]
     },
+    "symfony/stimulus-bundle": {
+        "version": "2.18",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.13",
+            "ref": "6acd9ff4f7fd5626d2962109bd4ebab351d43c43"
+        },
+        "files": [
+            "assets/bootstrap.js",
+            "assets/controllers.json",
+            "assets/controllers/hello_controller.js"
+        ]
+    },
     "symfony/translation": {
         "version": "6.3",
         "recipe": {
@@ -264,22 +293,6 @@
             "config/routes/web_profiler.yaml"
         ]
     },
-    "symfony/webpack-encore-bundle": {
-        "version": "2.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "2.0",
-            "ref": "082d754b3bd54b3fc669f278f1eea955cfd23cf5"
-        },
-        "files": [
-            "assets/app.js",
-            "assets/styles/app.css",
-            "config/packages/webpack_encore.yaml",
-            "package.json",
-            "webpack.config.js"
-        ]
-    },
     "symfonycasts/reset-password-bundle": {
         "version": "1.18",
         "recipe": {
@@ -291,6 +304,9 @@
         "files": [
             "config/packages/reset_password.yaml"
         ]
+    },
+    "symfonycasts/sass-bundle": {
+        "version": "v0.7.0"
     },
     "symfonycasts/verify-email-bundle": {
         "version": "v1.17.0"
