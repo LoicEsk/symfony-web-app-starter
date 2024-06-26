@@ -34,7 +34,7 @@ class AdminControllerTest extends WebTestCase
      
          // Recherche l'utilisateur par son email
          $userRepository = $entityManager->getRepository(User::class);
-         $user = $userRepository->findOneBy(['email' => 'admin@local.app' ]); // le dernier utlisateur
+         $user = $userRepository->findOneBy(['login' => 'admin' ]); // le dernier utlisateur
      
          $this->assertNotNull( $user, 'Aucun utilsateur trouvé' );
          return $user;

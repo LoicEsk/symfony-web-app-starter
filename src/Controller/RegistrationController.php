@@ -56,6 +56,7 @@ class RegistrationController extends AbstractController
             );
 
             $this->addFlash('warning','Nous vous avons envoyé un mail. Veuillez confirmer votre adresse.');
+            return $this->redirectToRoute('app_login');
 
         }
 

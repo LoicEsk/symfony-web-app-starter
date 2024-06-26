@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Controller;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
@@ -39,6 +39,7 @@ class RegistrationControllerTest extends WebTestCase
         self::assertPageTitleContains('Inscription');
 
         $this->client->submitForm('S\'inscrire', [
+            'registration_form[login]' => 'me',
             'registration_form[email]' => 'me@example.com',
             'registration_form[plainPassword]' => 'password'
         ]);

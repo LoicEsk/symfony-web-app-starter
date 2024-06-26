@@ -25,7 +25,10 @@
                 <p class="text-center"><button type="submit" class="btn btn-primary text-white">Se connecter</button></p>
 
             </form>
-            <p class="text-end"><a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a></p>
+            <div class="row">
+                <div class="col-sm-6"><a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié</a></div>
+                <div class="col-sm-6 text-end"><a href="{{ path('app_register') }}">Créer un compte</a></div>
+            </div>
         </div>
     </div>
 {% endblock %}
