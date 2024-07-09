@@ -10,6 +10,8 @@
 
 # Your code goes here
 
+php bin/console messenger:stop-workers
+
 composer install
 
 # Mise à jour de la base de données

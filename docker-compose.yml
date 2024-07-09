@@ -45,3 +45,14 @@ services:
             - "8088:80"
         user: www-data
         command: sh -c "php bin/console sass:build --watch"
+
+    messenger-worker:
+        build: .docker/sf
+        volumes:
+            - ./:/var/www/app
+        ports:
+            - "8089:80"
+        depends_on:
+            - db
+        user: www-data
+        command: sh -c "php bin/console messenger:consume"

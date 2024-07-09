@@ -24,6 +24,7 @@ class AppFixtures extends Fixture
             ->setLogin( 'admin' )
             ->setEmail( 'admin@local.app' )
             ->setRoles( ['ROLE_ADMIN'] )
+            ->setVerified( true )
         ;
         $adminUser->setPassword( $this->passwordHasher->hashPassword( $adminUser, 'localhost' ) );
         $manager->persist( $adminUser );
@@ -33,6 +34,7 @@ class AppFixtures extends Fixture
             ->setLogin( 'user' )
             ->setEmail( 'user@local.app' )
             ->setRoles( [] )
+            ->setVerified( true )
         ;
         $user->setPassword( $this->passwordHasher->hashPassword( $user, 'localhost' ) );
         $manager->persist( $user );
