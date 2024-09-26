@@ -25,6 +25,8 @@ class AppFixtures extends Fixture
             ->setEmail( 'admin@local.app' )
             ->setRoles( ['ROLE_ADMIN'] )
             ->setVerified( true )
+            ->setActif( true )
+            ->setCreatedAt( new \DateTimeImmutable() )
         ;
         $adminUser->setPassword( $this->passwordHasher->hashPassword( $adminUser, 'localhost' ) );
         $manager->persist( $adminUser );
@@ -35,6 +37,8 @@ class AppFixtures extends Fixture
             ->setEmail( 'user@local.app' )
             ->setRoles( [] )
             ->setVerified( true )
+            ->setActif( true )
+            ->setCreatedAt( new \DateTimeImmutable() )
         ;
         $user->setPassword( $this->passwordHasher->hashPassword( $user, 'localhost' ) );
         $manager->persist( $user );

@@ -1,10 +1,8 @@
 #!/bin/bash
 
 
-#  Install des packet php
+#  Install et build Synfony
 docker compose run --rm sf composer install
-
-
 
 
 # Base de données de tests
@@ -19,16 +17,6 @@ if [ $exit_code -ne 0 ]; then
 fi
 docker compose run --rm sf php bin/console doctrine:fixtures:load --env=test --no-interaction
 
-# docker compose run --rm sf php bin/console doctrine:migrations:migrate --env=test -y
-
-# # Install des packet JS
-# docker compose run --rm encore npm i
-# docker compose run --rm encore npm run dev
-
-# compilation des assets
-docker compose run --rm sf php bin/console importmap:install
-# docker compose run --rm sf php bin/console sass:build
-# docker compose run --rm sf php bin/console asset-map:compile
 
 # Liste des migrations Doctrine
 docker compose run --rm sf php bin/console doctrine:migrations:list

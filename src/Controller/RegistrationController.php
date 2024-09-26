@@ -31,6 +31,8 @@ class RegistrationController extends AbstractController
 
 
         $user = new User();
+        $user->setActif( true );
+        
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -42,6 +44,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $user->setCreatedAt( new \DateTimeImmutable() );
 
             $entityManager->persist($user);
             $entityManager->flush();

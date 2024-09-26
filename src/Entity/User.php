@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Entity\Traits\EntityTimeTrait;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -15,7 +14,6 @@ use Symfony\Component\Validator\Constraints\NotNull;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
 
-    use EntityTimeTrait;
     
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -41,6 +39,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private bool $isVerified = false;
+
+    #[ORM\Column]
+    private ?bool $isActif = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $lastSuccessLoginAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()
     {
@@ -137,6 +144,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function isActif(): ?bool
+    {
+        return $this->isActif;
+    }
+
+    public function setActif(bool $isActif): static
+    {
+        $this->isActif = $isActif;
+
+        return $this;
+    }
+
+    public function getLastSuccessLoginAt(): ?\DateTimeImmutable
+    {
+        return $this->lastSuccessLoginAt;
+    }
+
+    public function setLastSuccessLoginAt(?\DateTimeImmutable $lastSuccessLoginAt): static
+    {
+        $this->lastSuccessLoginAt = $lastSuccessLoginAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

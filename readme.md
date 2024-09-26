@@ -20,7 +20,7 @@ Pour le deployement de mises à jour, il n'y aura plus que cette dernière ligne
 2. Lancer le bash de deployement avec `bash deploy_docker.sh`
 
 Pour deployer les mises à jour :
-`docker stop $(docker ps -q); docker compose up --build -d && bash deploy_docker.sh`
+`docker compose up --build -d && bash deploy_docker.sh`
 
 ## Utilisation du serveur Docker
 
