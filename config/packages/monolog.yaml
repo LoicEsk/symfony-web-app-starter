@@ -65,6 +65,7 @@ when@prod:
                 type: stream
                 channels: [deprecation]
                 path: php://stderr
+                formatter: monolog.formatter.json
             app:
                 type:  rotating_file
                 path:  '%kernel.logs_dir%/app-%kernel.environment%.log'
