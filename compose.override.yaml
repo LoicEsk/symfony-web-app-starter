@@ -1,0 +1,46 @@
+# Development environment override
+services:
+  php:
+    build:
+      context: .
+      target: frankenphp_dev
+    volumes:
+      - ./:/app
+      - ./frankenphp/Caddyfile:/etc/frankenphp/Caddyfile:ro
+      - ./frankenphp/conf.d/20-app.dev.ini:/usr/local/etc/php/app.conf.d/20-app.dev.ini:ro
+      # If you develop on Mac or Windows you can remove the vendor/ directory
+      # from the bind-mount for better performance by enabling the next line:
+      #- /app/vendor
+    environment:
+      # See https://xdebug.org/docs/all_settings#mode
+      XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+      APP_ENV: "${APP_ENV:-dev}"
+      # Plain HTTP on a non-standard port in dev: an unscoped "localhost"
+      # address defaults to :443 (Caddy's automatic-HTTPS heuristic), which
+      # breaks the HTTP_PORT remapping below. The explicit http:// scheme
+      # forces :80, matching the published port.
+      SERVER_NAME: "http://${SERVER_NAME:-localhost}"
+      CADDY_GLOBAL_OPTIONS: "auto_https off"
+    extra_hosts:
+      # Ensure that host.docker.internal is correctly defined on Linux
+      - host.docker.internal:host-gateway
+    tty: true
+
+  database:
+    image: mariadb:10
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-app}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  mailer:
+    image: mailhog/mailhog:v1.0.0
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+volumes:
+  db_data:
