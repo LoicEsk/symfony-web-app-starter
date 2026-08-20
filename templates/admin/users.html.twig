@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration - Utilisateurs{% endblock %}
+
+{% block content %}
+    {% include 'parts/flashBang.html.twig' %}
+
+    <h1 class="mt-4">Utilisateurs</h1>
+
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Login</th>
+                <th>Email</th>
+                <th>Rôles</th>
+                <th>Dernière connexion</th>
+                <th>Statut</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.login }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.roles|join(', ') }}</td>
+                    <td>{{ user.lastLogin ? user.lastLogin|date('d/m/Y H:i') : 'Jamais' }}</td>
+                    <td>
+                        {% if user.enabled %}
+                            <span class="badge bg-success">Actif</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Désactivé</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form method="post" action="{{ path('app_admin_users_toggle_enabled', { id: user.id }) }}" onsubmit="return confirm('Confirmer ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('toggle-enabled-' ~ user.id) }}">
+                            <button type="submit" class="btn btn-sm {{ user.enabled ? 'btn-outline-danger' : 'btn-outline-success' }}" {{ user is same as(app.user) ? 'disabled' : '' }}>
+                                {{ user.enabled ? 'Désactiver' : 'Activer' }}
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
