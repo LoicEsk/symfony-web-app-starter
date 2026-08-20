@@ -2,6 +2,7 @@
 
 namespace App\Tests\Controller;
 
+use App\Repository\ResetPasswordRequestRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -24,6 +25,9 @@ class RegistrationControllerTest extends WebTestCase
         $em = $container->get('doctrine')->getManager();
         $this->userRepository = $container->get(UserRepository::class);
 
+        foreach ($container->get(ResetPasswordRequestRepository::class)->findAll() as $resetRequest) {
+            $em->remove($resetRequest);
+        }
         foreach ($this->userRepository->findAll() as $user) {
             $em->remove($user);
         }
@@ -49,19 +53,12 @@ class RegistrationControllerTest extends WebTestCase
         self::assertCount(1, $this->userRepository->findAll());
         self::assertFalse(($user = $this->userRepository->findOneBy([], ['createdAt' => 'DESC']))->isVerified());
 
-        // Ensure the verification email was sent
-        // Use either assertQueuedEmailCount() || assertEmailCount() depending on your mailer setup
-        self::assertQueuedEmailCount(1);
-        // self::assertEmailCount(1);
+        // Ensure the verification email was actually sent (not just queued -
+        // emails are dispatched synchronously, see config/packages/messenger.yaml)
+        self::assertEmailCount(1);
 
-        /**
-         * Revoir le test du mail avec le transporter
-         */
-
-        // self::assertCount(2, $messages = $this->getMailerMessages());
-        // self::assertEmailAddressContains($messages[0], 'from', 'no-reply@Starter.com');
-        // self::assertEmailAddressContains($messages[0], 'to', 'me@example.com');
-        // self::assertEmailTextBodyContains($messages[0], 'Please confirm your email');
+        $messages = $this->getMailerMessages();
+        self::assertEmailAddressContains($messages[0], 'to', 'me@example.com');
 
         // Login the new user
         // $this->client->loginUser($user);
