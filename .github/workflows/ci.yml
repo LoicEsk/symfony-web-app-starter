@@ -42,7 +42,7 @@ jobs:
         run: docker compose up --wait --no-build
 
       - name: Check HTTP reachability
-        run: curl -v --fail-with-body http://localhost:8000
+        run: curl -v --fail-with-body -L http://localhost:8000
 
       - name: Create test database
         run: docker compose exec -T php php bin/console -e test doctrine:database:create --if-not-exists
