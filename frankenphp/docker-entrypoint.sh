@@ -37,6 +37,13 @@ if [ "$1" = 'frankenphp' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		fi
 	fi
 
+	# Compile the Sass stylesheets referenced by the templates. The prod image
+	# already does this at build time (see Dockerfile); dev/test bind-mount the
+	# source over /app, so it has to happen at container start instead.
+	if [ "$APP_ENV" != 'prod' ]; then
+		php bin/console sass:build
+	fi
+
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
 	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 
