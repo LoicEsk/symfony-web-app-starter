@@ -11,6 +11,7 @@ use App\Entity\Traits\EntityTimeTrait;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['email', 'login'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {

@@ -19,6 +19,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @see     https://www.doctrine-project.org/projects/doctrine-orm/en/latest/reference/inheritance-mapping.html
  * @see     https://medium.com/@galopintitouan/using-traits-to-compose-your-doctrine-entities-9b516335119b
  *
+ * The host entity must be annotated with #[ORM\HasLifecycleCallbacks] for
+ * $updatedAt to be maintained automatically.
+ *
  * @author  Gaëtan Rolé-Dubruille <gaetan.role@gmail.com>
  */
 trait EntityTimeTrait
@@ -27,12 +30,8 @@ trait EntityTimeTrait
     #[ORM\Column]
     private DateTimeImmutable $createdAt;
 
-    /**
-     * @var |null
-     *
-     */
     #[ORM\Column(nullable: true)]
-    private DateTimeInterface $updatedAt;
+    private ?DateTimeImmutable $updatedAt = null;
 
     /* Auto generated methods */
 
@@ -47,13 +46,19 @@ trait EntityTimeTrait
             = $createdAt instanceof DateTime ? DateTimeImmutable::createFromMutable($createdAt) : $createdAt;
     }
 
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?DateTimeInterface $updatedAt): void
+    public function setUpdatedAt(?DateTimeImmutable $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    #[ORM\PreUpdate]
+    public function refreshUpdatedAt(): void
+    {
+        $this->updatedAt = new DateTimeImmutable('now');
     }
 }
