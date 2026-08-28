@@ -1,34 +1,21 @@
 #!/bin/bash
 
-
-#  Install des packet php
-docker compose run --rm sf composer install
-
-
-
+# Build & start the dev stack (compose.yaml + compose.override.yaml, picked up automatically)
+docker compose up --wait --build
 
 # Base de données de tests
-docker compose run --rm sf php bin/console doctrine:migrations:migrate --env=test --no-interaction
+docker compose exec php php bin/console doctrine:migrations:migrate --env=test --no-interaction
 exit_code=$?
 if [ $exit_code -ne 0 ]; then
-    docker compose run --rm sf php bin/console doctrine:database:drop --force --env=test -q
-    docker compose run --rm sf php bin/console doctrine:database:create --env=test
-    docker compose run --rm sf php bin/console doctrine:migrations:migrate --env=test --no-interaction
-# else
-#     echo "Base de données de tests à jour"
+    docker compose exec php php bin/console doctrine:database:drop --force --env=test -q
+    docker compose exec php php bin/console doctrine:database:create --env=test
+    docker compose exec php php bin/console doctrine:migrations:migrate --env=test --no-interaction
 fi
-docker compose run --rm sf php bin/console doctrine:fixtures:load --env=test --no-interaction
-
-# docker compose run --rm sf php bin/console doctrine:migrations:migrate --env=test -y
-
-# # Install des packet JS
-# docker compose run --rm encore npm i
-# docker compose run --rm encore npm run dev
+docker compose exec php php bin/console doctrine:fixtures:load --env=test --no-interaction
 
 # compilation des assets
-docker compose run --rm sf php bin/console importmap:install
-# docker compose run --rm sf php bin/console sass:build
-# docker compose run --rm sf php bin/console asset-map:compile
+docker compose exec php php bin/console importmap:install
+docker compose exec php php bin/console sass:build
+docker compose exec php php bin/console asset-map:compile
 
-# Liste des migrations Doctrine
-docker compose run --rm sf php bin/console doctrine:migrations:list
+echo "Prêt : http://localhost:${HTTP_PORT:-8000}"

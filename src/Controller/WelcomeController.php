@@ -8,6 +8,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class WelcomeController extends AbstractController
 {
+    #[Route('/', name: 'app_home')]
+    public function home(): Response
+    {
+        return $this->redirectToRoute('app_login');
+    }
+
     #[Route('/welcome', name: 'app_welcome')]
     public function index(): Response
     {
