@@ -57,6 +57,9 @@
             "symfony/flex": true,
             "symfony/runtime": true
         },
+        "platform": {
+            "php": "8.3"
+        },
         "sort-packages": true
     },
     "autoload": {
